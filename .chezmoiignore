@@ -27,3 +27,8 @@
 
 # Repo-level documentation (lives in the source dir, not deployed to $HOME)
 README.md
+
+# lazy.nvim plugin lockfile — intentionally per-host. Each machine runs
+# `:Lazy update` independently, so syncing this file would create constant
+# churn. Plugin specs in lua/plugins/* are the shared source of truth.
+.config/nvim/lazy-lock.json

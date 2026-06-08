@@ -11,7 +11,7 @@ My dotfiles, managed by [chezmoi](https://www.chezmoi.io). Source files live in
 | zsh         | `.zshrc`, `.zshenv`, `.profile`, `.p10k.zsh`         |
 | zsh helpers | `.zsh/completions/refresh.sh`                        |
 | tmux        | `.tmux.conf`                                         |
-| neovim      | `.config/nvim/` (LazyVim setup + `lazy-lock.json`)   |
+| neovim      | `.config/nvim/` (LazyVim setup; `lazy-lock.json` is per-host, see `.chezmoiignore`) |
 | matplotlib  | `.config/matplotlib/matplotlibrc`                    |
 | conda       | `.condarc`                                           |
 | Claude Code | `.claude/CLAUDE.md`, `.claude/rules/code/CLAUDE.md`  |
