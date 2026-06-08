@@ -27,7 +27,6 @@ Plus two bootstrap scripts that run once on first `chezmoi apply`:
 ## What this repo intentionally does NOT manage
 
 See [`.chezmoiignore`](./.chezmoiignore) for the full list
----
 
 ## New machine setup
 
