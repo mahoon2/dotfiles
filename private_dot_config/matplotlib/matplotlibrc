@@ -1,0 +1,69 @@
+font.family: sans-serif
+font.sans-serif: Inter
+font.size: 7
+svg.fonttype: none
+
+figure.dpi: 300
+figure.constrained_layout.use: False
+
+# axes.unicode_minus: False
+axes.formatter.limits: -100, 100 # No scientific notation, manual scale needed
+
+savefig.format: png
+savefig.transparent: False
+pdf.fonttype: 42
+
+# Figure colors
+figure.facecolor: white
+# axes.facecolor: white # "#ebebeb" for ggplot style
+axes.facecolor: E5E5E5
+axes.edgecolor: white
+axes.linewidth: 0.5
+
+# Spines
+# axes.spines.left: False
+# axes.spines.right: False
+# axes.spines.top: False
+# axes.spines.bottom: False
+
+# Grid
+axes.grid: True
+axes.grid.which: major
+axes.grid.axis: both
+grid.color: white
+# grid.alpha: 0.3
+grid.linewidth: 0.5
+grid.linestyle: -
+axes.axisbelow: True
+
+# Font colors
+text.color: black
+axes.labelcolor: black
+xtick.color: black
+ytick.color: black
+
+# Ticks
+xtick.major.width: 0.5
+xtick.minor.width: 0.5
+ytick.major.width: 0.5
+ytick.minor.width: 0.5
+
+# xtick.minor.visible: True
+# ytick.minor.visible: True
+
+# xtick.minor.ndivs: 2
+# ytick.minor.ndivs: 2
+
+# Legend
+legend.frameon: False
+legend.handletextpad: 0
+
+# LaTeX
+mathtext.fontset : custom
+# Roman (regular) font
+mathtext.rm : Inter
+# Italic font
+mathtext.it : Inter:italic
+# Bold font
+mathtext.bf : Inter:bold
+
