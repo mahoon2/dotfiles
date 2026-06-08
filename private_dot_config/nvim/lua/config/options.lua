@@ -5,10 +5,6 @@
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.clipboard = "unnamedplus"
-vim.api.nvim_set_hl(0, "WinSeparator", {
-  fg = "#7bb9fa",
-  bold = true,
-})
 
 local function prepend_path(path)
   if vim.fn.isdirectory(path) == 0 then
