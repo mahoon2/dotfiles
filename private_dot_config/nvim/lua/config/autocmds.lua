@@ -14,8 +14,13 @@ local function set_window_border_hl()
   })
 end
 
+local border_hl_group = vim.api.nvim_create_augroup("mahoon_window_border_hl", { clear = true })
+
 vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = set_window_border_hl,
+  group = border_hl_group,
+  callback = function()
+    vim.schedule(set_window_border_hl)
+  end,
 })
 
-set_window_border_hl()
+vim.schedule(set_window_border_hl)
