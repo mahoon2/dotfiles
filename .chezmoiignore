@@ -24,3 +24,6 @@
 # Claude Code state (large, machine-specific)
 .claude.json
 .claude.json.backup
+
+# Repo-level documentation (lives in the source dir, not deployed to $HOME)
+README.md
