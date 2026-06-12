@@ -90,6 +90,7 @@ plugins=(
 	colored-man-pages
 	zsh-autosuggestions
 	fast-syntax-highlighting
+    fzf
 )
 # zstyle ':omz:plugins:pipenv' auto-shell no
 
@@ -137,7 +138,8 @@ export CUDA_DEVICE_ORDER=PCI_BUS_ID
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls="ls -tlh --color=tty" 
+# alias ls="ls -tlh --color=tty"
+alias ls="eza -l --icons=\"auto\" --group-directories-first"
 alias vi="nvim"
 
 # Python aliases
@@ -206,3 +208,5 @@ export PATH="$HOME/.local/go/bin:$GOPATH/bin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
