@@ -5,208 +5,123 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+unset ZSH
+ZSH_VENDOR="$HOME/.zsh/vendor"
+ZSH_OMZ="$ZSH_VENDOR/oh-my-zsh"
 export EDITOR=nvim
 export PAGER=less
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-zstyle ':omz:update' mode disabled  # disable automatic updates (run `omz update` manually)
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-	git
-	git-commit
-    ssh-agent
-#	python
-	tmux
-	uv
-	virtualenv
-	colored-man-pages
-	zsh-autosuggestions
-	fast-syntax-highlighting
-    fzf
-)
-# zstyle ':omz:plugins:pipenv' auto-shell no
-
-zstyle :omz:plugins:ssh-agent lazy yes
-zstyle :omz:plugins:ssh-agent identities id_ed25519
-# zstyle :omz:plugins:ssh-agent quiet yes
-
-# Cached static completions (regenerate with ~/.zsh/completions/refresh.sh).
-fpath=(~/.zsh/completions $fpath)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
 export CUDA_DEVICE_ORDER=PCI_BUS_ID
 
-# export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
-# if [ ! -S "$SSH_AUTH_SOCK" ] || ! pgrep -u "$USER" ssh-agent > /dev/null; then
-#     rm -f "$SSH_AUTH_SOCK"
-#     eval $(ssh-agent -s -a "$SSH_AUTH_SOCK") > /dev/null
-# fi
+# Keep path/fpath local to this shell. Exported FPATH from a parent zsh can make
+# child shells inherit plugin paths and force compdump churn.
+typeset -U path PATH fpath FPATH
+typeset +x FPATH
+path=(
+  "$HOME/.local/bin"
+  $path
+)
+fpath=(
+  "$HOME/.zsh/completions"
+)
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Host-local paths, completions, and tool hooks. Sourced before compinit so
+# machine-specific fpath entries are included in the completion cache.
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+autoload -Uz compinit
+_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${HOST}-${ZSH_VERSION}"
+mkdir -p -- "${_zcompdump:h}"
+if [[ -n "${_zcompdump}(#qNmh-24)" ]]; then
+  compinit -C -d "$_zcompdump"
+else
+  compinit -d "$_zcompdump"
+fi
+unset _zcompdump
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-# alias ls="ls -tlh --color=tty"
-alias ls="eza -l --icons=\"auto\" --group-directories-first"
-alias vi="nvim"
-
-# Python aliases
-alias python="python3"
-alias pip="pip3"
-alias pi="pip3 install"
-alias pui="pip3 uninstall"
-
-# Python venv aliases
-alias va='source .venv/bin/activate'
-alias vda='deactivate'
-
-# Conda aliases
-alias ca="conda activate"
-alias cda="conda deactivate"
-alias ci="conda install"
-alias cui="conda uninstall"
-alias cls="conda list"
-alias cels="conda env list"
-unset PYTHONPATH
-
-# CLI tools
-alias cc="claude"
-alias ccu="ccusage"
-alias gem="gemini"
-alias co="codex"
-
-# Git aliases
-alias gfp="git fetch --prune"
-
-# -------------------------- #
-# Locally installed packages #
-# -------------------------- #
-
-# Add ~/.local/bin to PATH
-if [ -z "$(echo ":$PATH:" | grep -F ":$HOME/.local/bin:")" ]; then
-	export PATH="$HOME/.local/bin:$PATH"
+# Directly load the OMZ plugin files whose aliases/functions are part of the
+# daily interface, without loading the OMZ framework itself.
+if [[ -d "$ZSH_OMZ" ]]; then
+  [[ -r "$ZSH_OMZ/lib/git.zsh" ]] && source "$ZSH_OMZ/lib/git.zsh"
+  _git_plugin="$ZSH_OMZ/plugins/git/git.plugin.zsh"
+  _git_plugin_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/omz-git.plugin.zsh"
+  if [[ -r "$_git_plugin" ]]; then
+    mkdir -p -- "${_git_plugin_cache:h}"
+    _git_bin="${commands[git]:-}"
+    if [[ ! -s "$_git_plugin_cache" || "$_git_plugin" -nt "$_git_plugin_cache" || -n "$_git_bin" && "$_git_bin" -nt "$_git_plugin_cache" ]]; then
+      _git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
+      {
+        while IFS= read -r _git_plugin_line; do
+          case "$_git_plugin_line" in
+            'git_version='*) print -r -- "git_version='$_git_version'" ;;
+            *) print -r -- "$_git_plugin_line" ;;
+          esac
+        done < "$_git_plugin"
+      } >| "$_git_plugin_cache"
+      unset _git_plugin_line _git_version
+    fi
+    source "$_git_plugin_cache"
+    unset _git_bin
+  fi
+  unset _git_plugin _git_plugin_cache
+  _git_commit_plugin="$ZSH_OMZ/plugins/git-commit/git-commit.plugin.zsh"
+  _git_commit_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/omz-git-commit-aliases"
+  if [[ -r "$_git_commit_plugin" ]]; then
+    mkdir -p -- "${_git_commit_cache:h}"
+    if [[ ! -s "$_git_commit_cache" || "$_git_commit_plugin" -nt "$_git_commit_cache" ]]; then
+      source "$_git_commit_plugin" && print -r -- cached >| "$_git_commit_cache"
+    fi
+  fi
+  unset _git_commit_plugin _git_commit_cache
+  [[ -r "$ZSH_OMZ/plugins/tmux/tmux.plugin.zsh" ]] && source "$ZSH_OMZ/plugins/tmux/tmux.plugin.zsh"
+  [[ -r "$ZSH_OMZ/plugins/virtualenv/virtualenv.plugin.zsh" ]] && source "$ZSH_OMZ/plugins/virtualenv/virtualenv.plugin.zsh"
+  [[ -r "$ZSH_OMZ/plugins/colored-man-pages/colored-man-pages.plugin.zsh" ]] && source "$ZSH_OMZ/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
 fi
 
-# Node.js (lazy-loaded; nvm itself only loads on first invocation — saves ~330 ms
-# per shell). The version-pinned PATH entry lives in ~/.zshrc.local because the
-# installed node version may differ across hosts.
+[[ -r "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[[ -r "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]] && source "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+
+if [[ -o interactive && -t 0 && -t 1 ]] && (( $+commands[fzf] )); then
+  eval "$(fzf --zsh)"
+fi
+
+[[ -r "$HOME/.zsh/aliases.zsh" ]] && source "$HOME/.zsh/aliases.zsh"
+unset PYTHONPATH
+
+# Add ~/.local/bin to PATH.
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+  path=("$HOME/.local/bin" $path)
+fi
+
+# Node.js (lazy-loaded; nvm itself only loads on first invocation). The
+# version-pinned PATH entry lives in ~/.zshrc.local because the installed node
+# version may differ across hosts.
 export NVM_DIR="$HOME/.nvm"
 nvm() {
-    unset -f nvm node npm npx
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-    nvm "$@"
+  unset -f nvm node npm npx
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+  nvm "$@"
 }
 node() { nvm >/dev/null; node "$@"; }
 npm()  { nvm >/dev/null; npm  "$@"; }
 npx()  { nvm >/dev/null; npx  "$@"; }
 
-# Claude Code (CC)
-export PATH="$HOME/.claude/local:$PATH"
+# Claude Code
+path=("$HOME/.claude/local" $path)
 export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=yes
 
 # Go
 export GOPATH="$HOME/go"
-export PATH="$HOME/.local/go/bin:$GOPATH/bin:$PATH"
+path=("$HOME/.local/go/bin" "$GOPATH/bin" $path)
 
-# Host-local overrides: credentials, cluster paths, conda, modules, perl/meme/texlive,
-# pinned node version. Kept out of chezmoi; permissions are 0600.
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [[ -o interactive ]]; then
+  if [[ -t 0 && -t 1 ]]; then
+    [[ -r "$ZSH_VENDOR/themes/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "$ZSH_VENDOR/themes/powerlevel10k/powerlevel10k.zsh-theme"
+    [[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+  else
+    {
+      [[ -r "$ZSH_VENDOR/themes/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "$ZSH_VENDOR/themes/powerlevel10k/powerlevel10k.zsh-theme"
+      [[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+    } >/dev/null 2>&1
+  fi
+fi
