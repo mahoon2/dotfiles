@@ -18,11 +18,10 @@ My dotfiles, managed by [chezmoi](https://www.chezmoi.io). Source files live in
 
 Plus two bootstrap scripts that run once on first `chezmoi apply`:
 
-- `run_once_install-zsh-stack.sh` — installs Oh My Zsh and clones
-  `zsh-autosuggestions`, `fast-syntax-highlighting`, `powerlevel10k`. Refreshes
-  cached completions.
-- `run_once_install-tmux-stack.sh` — clones TPM (Tmux Plugin Manager) into
-  `~/.tmux/plugins/tpm`.
+- `run_once_install-zsh-stack.sh` — ensures the vendored zsh plugin/theme
+  directories under `~/.zsh/vendor` are present. Refreshes cached completions.
+- `run_once_install-tmux-stack.sh` — clones TPM into `~/.tmux/plugins/tpm`
+  and installs Catppuccin/tmux status modules under `~/.config/tmux/plugins`.
 
 ## What this repo intentionally does NOT manage
 
@@ -42,13 +41,15 @@ This:
 2. Clones this repo into `~/.local/share/chezmoi/`.
 3. Runs `chezmoi apply`, which:
    - Materializes every managed file into `$HOME`.
-   - Executes both `run_once_*` scripts (clones OMZ + plugins, TPM).
+   - Executes both `run_once_*` scripts (zsh vendor checks and tmux plugins).
    - Refreshes cached zsh completions for whatever tools are already installed.
 
-### After bootstrap: install tmux plugins
+### After bootstrap: tmux plugins
 
-The bootstrap script installs TPM but not the plugins listed in `.tmux.conf`.
-Open tmux and press `prefix + I` (capital I) to install them.
+The bootstrap script installs Catppuccin, `tmux-cpu`, and `tmux-battery`
+directly because Catppuccin recommends manual installation. TPM remains
+available for `@plugin` entries such as `tmux-sensible`; open tmux and press
+`prefix + I` (capital I) if those TPM-managed entries need installing.
 
 ### One-time migration warning (existing dotfiles)
 
