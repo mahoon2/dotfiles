@@ -12,6 +12,8 @@ export EDITOR=nvim
 export PAGER=less
 export CUDA_DEVICE_ORDER=PCI_BUS_ID
 
+setopt autocd
+
 # Keep path/fpath local to this shell. Exported FPATH from a parent zsh can make
 # child shells inherit plugin paths and force compdump churn.
 typeset -U path PATH fpath FPATH
