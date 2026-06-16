@@ -22,6 +22,7 @@ path=(
 )
 fpath=(
   "$HOME/.zsh/completions"
+  $fpath
 )
 
 # Host-local paths, completions, and tool hooks. Sourced before compinit so
