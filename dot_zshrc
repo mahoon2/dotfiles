@@ -50,15 +50,16 @@ if [[ -d "$ZSH_OMZ" ]]; then
   unset _omz_plugin _omz_file
 fi
 
-[[ -r "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-[[ -r "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]] && source "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-
 # A git-installed fzf lives in ~/.fzf/bin; put it on PATH before the fzf shell
 # integration below, whose $+commands[fzf] guard needs fzf to be resolvable.
 [[ -x "$HOME/.fzf/bin/fzf" ]] && path=("$HOME/.fzf/bin" $path)
 if [[ -o interactive ]] && (( $+commands[fzf] )); then
   eval "$(fzf --zsh)"
 fi
+
+[[ -r "$ZSH_VENDOR/plugins/fzf-tab/fzf-tab.plugin.zsh" ]] && source "$ZSH_VENDOR/plugins/fzf-tab/fzf-tab.plugin.zsh"
+[[ -r "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[[ -r "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]] && source "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
 [[ -r "$HOME/.zsh/aliases.zsh" ]] && source "$HOME/.zsh/aliases.zsh"
 unset PYTHONPATH

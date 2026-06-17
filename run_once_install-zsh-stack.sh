@@ -27,6 +27,8 @@ clone_or_pull https://github.com/zsh-users/zsh-autosuggestions.git \
   "$ZSH_VENDOR/plugins/zsh-autosuggestions"
 clone_or_pull https://github.com/zdharma-continuum/fast-syntax-highlighting.git \
   "$ZSH_VENDOR/plugins/fast-syntax-highlighting"
+clone_or_pull https://github.com/Aloxaf/fzf-tab.git \
+  "$ZSH_VENDOR/plugins/fzf-tab"
 clone_or_pull https://github.com/romkatv/powerlevel10k.git \
   "$ZSH_VENDOR/themes/powerlevel10k"
 
