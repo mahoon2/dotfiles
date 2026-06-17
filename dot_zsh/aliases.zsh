@@ -1,9 +1,11 @@
 # Personal aliases. OMZ plugin aliases are loaded from their original plugin files.
 
 alias ls="eza -l --icons=\"auto\" --group-directories-first"
+alias la="eza -l --icons=\"auto\" --group-directories-first -a"
 alias vi="nvim"
 
 # Python
+alias py="python3"
 alias python="python3"
 alias pip="pip3"
 alias pi="pip3 install"
