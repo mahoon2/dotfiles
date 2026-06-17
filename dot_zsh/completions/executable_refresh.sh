@@ -16,6 +16,11 @@ if (( $+commands[uv] )); then
   emit "refreshed _uv ($(wc -l < _uv) lines)"
 fi
 
+if (( $+commands[uvx] )); then
+  uvx --generate-shell-completion zsh > _uvx
+  emit "refreshed _uvx ($(wc -l < _uvx) lines)"
+fi
+
 if (( $+commands[glab] )); then
   glab completion -s zsh > _glab
   emit "refreshed _glab ($(wc -l < _glab) lines)"
