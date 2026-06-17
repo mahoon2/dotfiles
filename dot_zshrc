@@ -8,9 +8,6 @@ fi
 unset ZSH
 ZSH_VENDOR="$HOME/.zsh/vendor"
 ZSH_OMZ="$ZSH_VENDOR/oh-my-zsh"
-export EDITOR=nvim
-export PAGER=less
-export CUDA_DEVICE_ORDER=PCI_BUS_ID
 
 setopt autocd
 
@@ -18,10 +15,6 @@ setopt autocd
 # child shells inherit plugin paths and force compdump churn.
 typeset -U path PATH fpath FPATH
 typeset +x FPATH
-path=(
-  "$HOME/.local/bin"
-  $path
-)
 fpath=(
   "$HOME/.zsh/completions"
   $fpath
@@ -90,11 +83,6 @@ fi
 [[ -r "$HOME/.zsh/aliases.zsh" ]] && source "$HOME/.zsh/aliases.zsh"
 unset PYTHONPATH
 
-# Add ~/.local/bin to PATH.
-if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
-  path=("$HOME/.local/bin" $path)
-fi
-
 # Node.js (lazy-loaded; nvm itself only loads on first invocation). The
 # version-pinned PATH entry lives in ~/.zshrc.local because the installed node
 # version may differ across hosts.
@@ -109,14 +97,7 @@ node() { nvm >/dev/null; node "$@"; }
 npm()  { nvm >/dev/null; npm  "$@"; }
 npx()  { nvm >/dev/null; npx  "$@"; }
 
-# Claude Code
-path=("$HOME/.claude/local" $path)
-export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=yes
-
-# Go
-export GOPATH="$HOME/go"
-path=("$HOME/.local/go/bin" "$GOPATH/bin" $path)
-
+# Load p10k theme manually
 if [[ -o interactive ]]; then
   if [[ -t 0 && -t 1 ]]; then
     [[ -r "$ZSH_VENDOR/themes/powerlevel10k/powerlevel10k.zsh-theme" ]] && source "$ZSH_VENDOR/themes/powerlevel10k/powerlevel10k.zsh-theme"

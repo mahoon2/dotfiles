@@ -1,1 +1,24 @@
-. "$HOME/.cargo/env"
+# ~/.zshenv — sourced by every zsh (interactive, non-interactive, scripts).
+# Single source of truth for machine-independent environment and PATH.
+# Host-specific entries (e.g. a version-pinned node) belong in ~/.zshrc.local.
+
+# General environment
+export EDITOR=nvim
+export PAGER=less
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
+
+# Tool-specific environment
+export GOPATH="$HOME/go"
+export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=yes
+
+# Rust/cargo (manual install); its env script prepends ~/.cargo/bin to PATH.
+[[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+typeset -U path PATH
+path=(
+  "$HOME/.local/bin"        # pip/pipx and other user-level installs
+  "$HOME/.local/go/bin"     # Go toolchain (manual install)
+  "$GOPATH/bin"             # binaries from `go install`
+  "$HOME/.claude/local"     # Claude Code
+  $path
+)
