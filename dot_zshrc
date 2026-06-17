@@ -90,3 +90,10 @@ if [[ -o interactive ]]; then
     } >/dev/null 2>&1
   fi
 fi
+
+bindkey -M viins '^A' beginning-of-line
+bindkey -M viins '^E' end-of-line
+bindkey -M viins '^[b' backward-word
+bindkey -M viins '^[f' forward-word
+bindkey -M viins '^U' backward-kill-line
+bindkey -M viins '^[^?' backward-kill-word
