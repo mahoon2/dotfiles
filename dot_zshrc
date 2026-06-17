@@ -9,6 +9,10 @@ unset ZSH
 ZSH_VENDOR="$HOME/.zsh/vendor"
 ZSH_OMZ="$ZSH_VENDOR/oh-my-zsh"
 
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt sharehistory appendhistory extendedhistory histignoredups histreduceblanks
 setopt autocd
 
 # Keep path/fpath local to this shell. Exported FPATH from a parent zsh can make
