@@ -56,7 +56,7 @@ fi
 # A git-installed fzf lives in ~/.fzf/bin; put it on PATH before the fzf shell
 # integration below, whose $+commands[fzf] guard needs fzf to be resolvable.
 [[ -x "$HOME/.fzf/bin/fzf" ]] && path=("$HOME/.fzf/bin" $path)
-if [[ -o interactive && -t 0 && -t 1 ]] && (( $+commands[fzf] )); then
+if [[ -o interactive ]] && (( $+commands[fzf] )); then
   eval "$(fzf --zsh)"
 fi
 
