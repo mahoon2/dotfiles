@@ -34,43 +34,16 @@ else
 fi
 unset _zcompdump
 
-# Directly load the OMZ plugin files whose aliases/functions are part of the
-# daily interface, without loading the OMZ framework itself.
+# Load selected Oh My Zsh plugins directly — their aliases and functions are part
+# of the daily interface — without bootstrapping the OMZ framework.
 if [[ -d "$ZSH_OMZ" ]]; then
-  [[ -r "$ZSH_OMZ/lib/git.zsh" ]] && source "$ZSH_OMZ/lib/git.zsh"
-  _git_plugin="$ZSH_OMZ/plugins/git/git.plugin.zsh"
-  _git_plugin_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/omz-git.plugin.zsh"
-  if [[ -r "$_git_plugin" ]]; then
-    mkdir -p -- "${_git_plugin_cache:h}"
-    _git_bin="${commands[git]:-}"
-    if [[ ! -s "$_git_plugin_cache" || "$_git_plugin" -nt "$_git_plugin_cache" || -n "$_git_bin" && "$_git_bin" -nt "$_git_plugin_cache" ]]; then
-      _git_version="${${(As: :)$(git version 2>/dev/null)}[3]}"
-      {
-        while IFS= read -r _git_plugin_line; do
-          case "$_git_plugin_line" in
-            'git_version='*) print -r -- "git_version='$_git_version'" ;;
-            *) print -r -- "$_git_plugin_line" ;;
-          esac
-        done < "$_git_plugin"
-      } >| "$_git_plugin_cache"
-      unset _git_plugin_line _git_version
-    fi
-    source "$_git_plugin_cache"
-    unset _git_bin
-  fi
-  unset _git_plugin _git_plugin_cache
-  _git_commit_plugin="$ZSH_OMZ/plugins/git-commit/git-commit.plugin.zsh"
-  _git_commit_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/omz-git-commit-aliases"
-  if [[ -r "$_git_commit_plugin" ]]; then
-    mkdir -p -- "${_git_commit_cache:h}"
-    if [[ ! -s "$_git_commit_cache" || "$_git_commit_plugin" -nt "$_git_commit_cache" ]]; then
-      source "$_git_commit_plugin" && print -r -- cached >| "$_git_commit_cache"
-    fi
-  fi
-  unset _git_commit_plugin _git_commit_cache
-  [[ -r "$ZSH_OMZ/plugins/tmux/tmux.plugin.zsh" ]] && source "$ZSH_OMZ/plugins/tmux/tmux.plugin.zsh"
-  [[ -r "$ZSH_OMZ/plugins/virtualenv/virtualenv.plugin.zsh" ]] && source "$ZSH_OMZ/plugins/virtualenv/virtualenv.plugin.zsh"
-  [[ -r "$ZSH_OMZ/plugins/colored-man-pages/colored-man-pages.plugin.zsh" ]] && source "$ZSH_OMZ/plugins/colored-man-pages/colored-man-pages.plugin.zsh"
+  [[ -r "$ZSH_OMZ/lib/git.zsh" ]] && () { source "$ZSH_OMZ/lib/git.zsh" }
+
+  for _omz_plugin in git git-commit tmux virtualenv colored-man-pages; do
+    _omz_file="$ZSH_OMZ/plugins/$_omz_plugin/$_omz_plugin.plugin.zsh"
+    [[ -r "$_omz_file" ]] && source "$_omz_file"
+  done
+  unset _omz_plugin _omz_file
 fi
 
 [[ -r "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
