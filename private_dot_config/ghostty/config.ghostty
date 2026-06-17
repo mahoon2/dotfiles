@@ -1,0 +1,20 @@
+font-size = 12
+font-family = "Hack Nerd Font"
+theme = "Atom One Dark"
+font-thicken = true
+macos-option-as-alt = true
+keybind = shift+enter=text:\n
+
+# Cmd + arrow: beginning/end of line
+keybind = super+arrow_left=text:\x01
+keybind = super+arrow_right=text:\x05
+
+# Option + arrow: previous/next word
+keybind = alt+arrow_left=esc:b
+keybind = alt+arrow_right=esc:f
+
+# Cmd + Backspace: delete to beginning of line
+keybind = super+backspace=text:\x15
+
+# Option + Backspace: delete previous word
+keybind = alt+backspace=text:\x1b\x7f
