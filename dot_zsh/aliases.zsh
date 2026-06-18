@@ -4,6 +4,10 @@ alias ls="eza -l --icons=\"auto\" --group-directories-first"
 alias la="eza -l --icons=\"auto\" --group-directories-first -a"
 alias vi="nvim"
 
+# Directory shortcuts.
+alias ...="../.."
+alias ....="../../.."
+
 # Python
 alias py="python3"
 alias python="python3"
