@@ -36,4 +36,9 @@ if (( $+commands[gh] )); then
   emit "refreshed _gh ($(wc -l < _gh) lines)"
 fi
 
+if (( $+commands[fd] )); then
+  fd --gen-completions zsh > _fd
+  emit "refreshed _fd ($(wc -l < _fd) lines)"
+fi
+
 emit "done. Run:  rm -f ~/.zcompdump* && exec zsh"

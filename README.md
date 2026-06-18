@@ -136,7 +136,7 @@ chezmoi apply
 
 ### Refresh cached completions
 
-After upgrading `uv`, `glab`, `marimo`, or `gh`:
+After upgrading `uv`, `glab`, `marimo`, `gh`, or `fd`:
 
 ```sh
 ~/.zsh/completions/refresh.sh
