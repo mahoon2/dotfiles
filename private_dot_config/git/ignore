@@ -2,8 +2,10 @@
 @eaDir
 Thumbs.db
 
+.agents
 .claude/
 .codex/
+.codex*/
 .vscode/
 
 __pycache__/
