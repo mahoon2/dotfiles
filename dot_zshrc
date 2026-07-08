@@ -43,6 +43,9 @@ unset _zcompdump
 if [[ -d "$ZSH_OMZ" ]]; then
   for _omz_plugin in tmux virtualenv colored-man-pages; do
     _omz_file="$ZSH_OMZ/plugins/$_omz_plugin/$_omz_plugin.plugin.zsh"
+    if [[ "$_omz_plugin" == colored-man-pages ]]; then
+      autoload -Uz colors && colors
+    fi
     [[ -r "$_omz_file" ]] && source "$_omz_file"
   done
   unset _omz_plugin _omz_file
