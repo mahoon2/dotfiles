@@ -38,12 +38,10 @@ else
 fi
 unset _zcompdump
 
-# Load selected Oh My Zsh plugins directly — their aliases and functions are part
-# of the daily interface — without bootstrapping the OMZ framework.
+# Load selected Oh My Zsh plugins directly without bootstrapping the OMZ
+# framework. Git aliases live in ~/.zsh/aliases.zsh to keep startup cheap.
 if [[ -d "$ZSH_OMZ" ]]; then
-  [[ -r "$ZSH_OMZ/lib/git.zsh" ]] && () { source "$ZSH_OMZ/lib/git.zsh" }
-
-  for _omz_plugin in git git-commit tmux virtualenv colored-man-pages; do
+  for _omz_plugin in tmux virtualenv colored-man-pages; do
     _omz_file="$ZSH_OMZ/plugins/$_omz_plugin/$_omz_plugin.plugin.zsh"
     [[ -r "$_omz_file" ]] && source "$_omz_file"
   done

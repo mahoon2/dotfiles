@@ -34,7 +34,7 @@ clone_or_pull https://github.com/romkatv/powerlevel10k.git \
 
 # The small OMZ subset used by ~/.zshrc is vendored by chezmoi. Do not install
 # the OMZ framework or clone ~/.oh-my-zsh here.
-if [[ ! -r "$ZSH_VENDOR/oh-my-zsh/plugins/git/git.plugin.zsh" ]]; then
+if [[ ! -r "$ZSH_VENDOR/oh-my-zsh/plugins/tmux/tmux.plugin.zsh" ]]; then
   log "warning: vendored OMZ plugin subset is missing under $ZSH_VENDOR/oh-my-zsh"
 fi
 
