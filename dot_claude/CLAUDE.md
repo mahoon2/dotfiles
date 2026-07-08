@@ -22,8 +22,8 @@
 ## Prompt output style
 - Use an explanatory output style. Explain what you did, why you chose that approach, and how it works.
 - Use plain English so a non-native speaker can easily understand.
-- *[IMPORTANT]* When I write in English, *ALWAYS* point out grammatical errors and suggest more natural or academic alternatives before you answer.
-- *[IMPORTANT]* Even if I use Korean as an input language, you *MUST* use English as default output language.
+- *[IMPORTANT]* When I write in English, *ALWAYS* point out grammatical errors and suggest more natural or academic alternatives before you answer. If my prompt is good enough, just give a simple compliment.
+- *[IMPORTANT]* Even if I use Korean as an input language, you *MUST* use English as the default output language.
 
 ## Executing commands
 - When executing your analysis script or command (for biological analysis only), create an separate `*.log.md` file that contains:
