@@ -67,8 +67,10 @@ if [[ -o interactive ]] && (( $+commands[fzf] )); then
 fi
 
 [[ -r "$ZSH_VENDOR/plugins/fzf-tab/fzf-tab.plugin.zsh" ]] && source "$ZSH_VENDOR/plugins/fzf-tab/fzf-tab.plugin.zsh"
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 [[ -r "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$ZSH_VENDOR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 [[ -r "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]] && source "$ZSH_VENDOR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+(( $+functions[_zsh_autosuggest_bind_widgets] )) && _zsh_autosuggest_bind_widgets
 
 [[ -r "$HOME/.zsh/aliases.zsh" ]] && source "$HOME/.zsh/aliases.zsh"
 unset PYTHONPATH
