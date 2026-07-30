@@ -44,31 +44,70 @@ Preserve raw inputs. Treat source data as immutable unless modification is expli
 
 ## Project organization
 
-At the project root, organize directories by chronological work unit rather than by artifact type.
+Organize analysis projects as a hierarchy of project root, chronological main
+work units, and optional chronological sub-work units. Do not create sub-work
+units when artifact-type directories are sufficient for a simple analysis.
 
 Example:
 
 ```text
-00-shared/
-01-ribogami-deterministic/
-02-mrnafold-finer-grid/
+project/
+├── README.md
+├── 0707-parameter-calibration/
+│   ├── README.md
+│   ├── 00-shared/
+│   │   └── README.md
+│   └── 01-ribogami-deterministic/
+│       └── README.md
+└── 0707-poster/
+    ├── README.md
+    ├── scripts/
+    └── results/
 ```
 
-Artifact-type directories may be created within each work unit.
+Every project root, main work unit, and sub-work unit must contain a
+`README.md`. Describe what the unit owns, why the work is needed, its status,
+its inputs and outputs, its canonical artifacts, and its relationship to
+upstream and downstream work.
+
+Keep artifact-type directories inside the work unit that owns them. Suitable
+names include `inputs/`, `scripts/`, `jobs/`, `logs/`, `manifests/`,
+`results/`, `artifacts/`, and `planned/`. Scheduler captures normally belong
+under `logs/slurm/<job-family>/`; do not collect logs from unrelated work units
+in one project-wide directory.
 
 Example:
 
 ```text
 01-ribogami-deterministic/
+├── README.md
+├── inputs/
+├── jobs/
 ├── logs/
-├── plots/
+├── manifests/
 ├── results/
-└── scripts/
+├── scripts/
+└── artifacts/
 ```
 
 Use `00-shared/` for inputs or resources shared across multiple work units.
+Keep work-unit roots clear: aside from `README.md`, only canonical summary
+datasets or final human-readable artifacts should be stored directly at a
+work-unit root.
 
 Once a work-unit directory has been committed, published, or referenced by another artifact, do not renumber it. Use the next available prefix for new work.
+
+Before cleanup, distinguish unique evidence from rebuildable material.
+Preserve immutable raw inputs, expensive or unique results, accepted summary
+tables, final artifacts, execution logs, and provenance needed to reproduce a
+conclusion. Delete caches, bytecode, failed or empty outputs, redundant report
+revisions, obsolete generated jobs, and inexpensive-to-recompute
+intermediates once their generating command and required inputs are preserved.
+
+Do not rewrite historical logs, manifests, or runtime records merely because a
+directory moved. Preserve their bytes and record old and new paths in a
+relocation manifest. Keep planned but unexecuted work under `planned/` and mark
+its status explicitly.
 
 ## Execution behavior
 

@@ -37,6 +37,7 @@ When my own prose is written in English:
 - Preserve existing behavior unless the task requires changing it.
 - Report failed checks, incomplete results, and important uncertainty.
 - Do not conceal quality-control failures or unexpected results.
+- Delete temporary artifacts generated from current session.
 
 ## Task-specific rules
 
