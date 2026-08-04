@@ -38,6 +38,12 @@ else
 fi
 unset _zcompdump
 
+autoload -U add-zsh-hook
+ls_after_cd() {
+    ls
+}
+add-zsh-hook chpwd ls_after_cd
+
 # Load selected Oh My Zsh plugins directly without bootstrapping the OMZ
 # framework. Git aliases live in ~/.zsh/aliases.zsh to keep startup cheap.
 if [[ -d "$ZSH_OMZ" ]]; then
