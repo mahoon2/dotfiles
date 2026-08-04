@@ -131,6 +131,24 @@ Before modifying a repository:
 - do not discard, overwrite, stage, or commit unrelated changes
 - do not rewrite published history without explicit authorization
 
+## Publishing and remote actions
+
+Anything that leaves the local machine needs my explicit confirmation first, immediately before the action. Local work does not.
+
+Do not do any of the following until I confirm:
+
+- push or force-push a branch, tag, or commit to a remote
+- create, update, merge, or close a merge request or pull request
+- post, edit, or delete a comment, note, review, or discussion on GitLab or GitHub
+- resolve or unresolve a review thread
+- create, edit, close, or reopen an issue, or change its labels or assignees
+
+Prepare the work locally, then stop and show me what you intend to publish: the exact commits, the target branch or remote, and the full text of any comment. Wait for my confirmation each time.
+
+A request to address, fix, or respond to review feedback authorizes the local changes, not the push or the reply. "Resolve the comments" means work out the fix, not mark the threads resolved. Earlier confirmation does not carry over to a later action.
+
+Read-only remote inspection is fine without asking, including fetching, cloning, and viewing issues, merge requests, or comments.
+
 ## Commits
 
 Create commits only when requested or when commit creation is clearly part of the task.
