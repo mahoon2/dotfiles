@@ -38,6 +38,12 @@ if [[ ! -r "$ZSH_VENDOR/oh-my-zsh/plugins/tmux/tmux.plugin.zsh" ]]; then
   log "warning: vendored OMZ plugin subset is missing under $ZSH_VENDOR/oh-my-zsh"
 fi
 
+# --- Generated shell integrations ---
+if [[ -x "$HOME/.zsh/integrations/refresh.sh" ]]; then
+  log "refreshing generated shell integrations"
+  "$HOME/.zsh/integrations/refresh.sh"
+fi
+
 # --- Cached completions ---
 if [[ -x "$HOME/.zsh/completions/refresh.sh" ]]; then
   log "refreshing cached completions"

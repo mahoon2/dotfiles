@@ -108,3 +108,5 @@ bindkey -M viins '^[b' backward-word
 bindkey -M viins '^[f' forward-word
 bindkey -M viins '^U' backward-kill-line
 bindkey -M viins '^[^?' backward-kill-word
+
+[[ -r "$HOME/.zsh/integrations/zoxide.zsh" ]] && source "$HOME/.zsh/integrations/zoxide.zsh"
