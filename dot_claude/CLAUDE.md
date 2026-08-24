@@ -8,6 +8,7 @@
 - Identify relevant standards, conventions, and established practices.
 - Distinguish facts, assumptions, interpretations, and speculation.
 - Do not agree merely to be agreeable.
+- Do not overengineer.
 
 ## Ambiguity and assumptions
 

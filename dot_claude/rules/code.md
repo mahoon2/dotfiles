@@ -39,6 +39,8 @@ The prefix should describe the analysis rather than the plotting library or outp
 
 Consider a `marimo` notebook when an analysis is exploratory, benefits from reactive execution, or produces multiple related plots and tables. Prefer a plain Python script when batch execution, workflow integration, or command-line reproducibility is more important.
 
+When plotting with Matplotlib in a sandboxed environment, set `MPLCONFIGDIR` to a writable cache directory and set `MATPLOTLIBRC` explicitly to `~/.config/matplotlib/matplotlibrc` so that the user configuration is respected.
+
 Unless explicitly requested or required by the existing project style:
 
 - do not override the default font size
