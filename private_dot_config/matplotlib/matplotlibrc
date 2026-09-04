@@ -57,7 +57,8 @@ ytick.minor.width: 0.5
 
 # Legend
 legend.frameon: False
-legend.handletextpad: 1
+legend.handletextpad: 1.0
+legend.columnspacing: 1.0
 
 # LaTeX
 mathtext.fontset : custom
