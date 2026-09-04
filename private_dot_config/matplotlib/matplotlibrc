@@ -1,5 +1,6 @@
 font.family: sans-serif
-font.sans-serif: Inter
+font.sans-serif: Inter Figure, Inter
+font.cursive: Inter
 font.size: 7
 svg.fonttype: none
 
