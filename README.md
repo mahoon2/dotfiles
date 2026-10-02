@@ -23,6 +23,13 @@ Plus two bootstrap scripts that run once on first `chezmoi apply`:
 - `run_once_install-tmux-stack.sh` — clones TPM into `~/.tmux/plugins/tpm`
   and installs Catppuccin/tmux status modules under `~/.config/tmux/plugins`.
 
+And one script that runs after every `chezmoi apply` / `chezmoi update`:
+
+- `run_after_link-codex-instructions.sh` — symlinks `~/.codex/AGENTS.md` to
+  `~/.claude/CLAUDE.md` and each `~/.codex/rules/*.md` to the matching
+  `~/.claude/rules/*.md`. Existing non-matching files are reported, not
+  overwritten.
+
 ## What this repo intentionally does NOT manage
 
 See [`.chezmoiignore`](./.chezmoiignore) for the full list
@@ -157,6 +164,7 @@ chezmoi requires prefixes to map source files to dotfiles in `$HOME`:
 | `private_dot_X`  | `$HOME/.X` with mode `0600`/`0700`|
 | `executable_dot_X` | `$HOME/.X` with `+x`            |
 | `run_once_X.sh`  | Executes once per hash change     |
+| `run_after_X.sh` | Executes after every apply        |
 | `.chezmoiignore` | Patterns of dest paths to skip    |
 
 This is structural in chezmoi — there is no setting to disable it.
