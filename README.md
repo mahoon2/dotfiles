@@ -14,7 +14,8 @@ My dotfiles, managed by [chezmoi](https://www.chezmoi.io). Source files live in
 | neovim      | `.config/nvim/` (LazyVim setup; `lazy-lock.json` is per-host, see `.chezmoiignore`) |
 | matplotlib  | `.config/matplotlib/matplotlibrc`                    |
 | conda       | `.condarc`                                           |
-| Claude Code | `.claude/CLAUDE.md`, `.claude/rules/code/CLAUDE.md`  |
+| Claude Code | `.claude/CLAUDE.md`, `.claude/rules/code/CLAUDE.md`, `.claude/themes/` |
+| Codex       | `.codex/themes/` (Tokyo Night `.tmTheme` from tokyonight.nvim extras) |
 
 Plus two bootstrap scripts that run once on first `chezmoi apply`:
 
