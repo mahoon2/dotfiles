@@ -33,3 +33,5 @@ __marimo__/
 *.toc
 
 node_modules/
+
+**/.claude/settings.local.json
