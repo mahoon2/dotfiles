@@ -1,0 +1,39 @@
+# CLI tools that have neither an official user-space installer nor a language
+# package manager route. Installed by `pixi global sync` from
+# run_onchange_after_20-install-tools.sh.tmpl, which reruns when this changes.
+version = 1
+
+[envs.gh]
+channels = ["conda-forge"]
+dependencies = { gh = "*" }
+exposed = { gh = "gh" }
+
+[envs.git-lfs]
+channels = ["conda-forge"]
+dependencies = { git-lfs = "*" }
+exposed = { git-lfs = "git-lfs" }
+
+[envs.glab]
+channels = ["conda-forge"]
+dependencies = { glab = "*" }
+exposed = { glab = "glab" }
+
+[envs.jq]
+channels = ["conda-forge"]
+dependencies = { jq = "*" }
+exposed = { jq = "jq" }
+
+[envs.nvim]
+channels = ["conda-forge"]
+dependencies = { nvim = "*" }
+exposed = { nvim = "nvim" }
+
+[envs.tmux]
+channels = ["conda-forge"]
+dependencies = { tmux = "*" }
+exposed = { tmux = "tmux" }
+
+[envs.unzip]
+channels = ["conda-forge"]
+dependencies = { unzip = "*" }
+exposed = { unzip = "unzip" }
