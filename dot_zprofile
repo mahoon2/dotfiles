@@ -1,0 +1,4 @@
+# ~/.zprofile — login shells, read after /etc/zprofile.
+# macOS /etc/zprofile runs path_helper, which moves system and Homebrew paths
+# ahead of the user paths that ~/.zshenv added. Re-apply them.
+[[ -r "$HOME/.zsh/path.sh" ]] && source "$HOME/.zsh/path.sh"

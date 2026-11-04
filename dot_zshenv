@@ -1,5 +1,6 @@
 # ~/.zshenv — sourced by every zsh (interactive, non-interactive, scripts).
-# Single source of truth for machine-independent environment and PATH.
+# Machine-independent environment. User-space tool paths live in
+# ~/.zsh/path.sh, which ~/.zprofile re-applies after macOS path_helper.
 # Host-specific entries (e.g. a version-pinned node) belong in ~/.zshrc.local.
 
 # General environment
@@ -14,13 +15,5 @@ export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=yes
 # (its cleanup pkill pattern never matches what it spawns); skip the boot.
 # export CODEX_SSH_SKIP_APP_SERVER_BOOT=true
 
-# Rust/cargo (manual install); its env script prepends ~/.cargo/bin to PATH.
-[[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-
 typeset -U path PATH
-path=(
-  "$HOME/.local/bin"        # pip/pipx and other user-level installs
-  "$HOME/.local/go/bin"     # Go toolchain (manual install)
-  "$GOPATH/bin"             # binaries from `go install`
-  $path
-)
+[[ -r "$HOME/.zsh/path.sh" ]] && source "$HOME/.zsh/path.sh"
