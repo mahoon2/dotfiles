@@ -24,7 +24,9 @@ fi
 
 if command -v tmux >/dev/null 2>&1; then
   log "installing tmux plugins"
-  "$TPM_DIR/bin/install_plugins" || log "warning: TPM plugin install failed"
+  # Detach stdin so the tmux client does not look up the caller's terminal in
+  # terminfo; installing plugins needs no terminal.
+  "$TPM_DIR/bin/install_plugins" </dev/null || log "warning: TPM plugin install failed"
 else
   log "warning: tmux not found; skipped plugin install"
 fi
