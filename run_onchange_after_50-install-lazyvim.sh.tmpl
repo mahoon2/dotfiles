@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Install lazy.nvim, LazyVim, and the plugins selected in ~/.config/nvim once
+# pixi has installed nvim. Reruns when the plugin selection changes.
+# lazyvim.json: {{ include "private_dot_config/nvim/lazyvim.json" | sha256sum }}
+# lazy.lua: {{ include "private_dot_config/nvim/lua/config/lazy.lua" | sha256sum }}
+# lang-tools.lua: {{ include "private_dot_config/nvim/lua/plugins/lang-tools.lua" | sha256sum }}
+
+set -euo pipefail
+
+log() { printf '[install-lazyvim] %s\n' "$*"; }
+
+. "$HOME/.zsh/path.sh"
+
+if ! command -v nvim >/dev/null 2>&1; then
+  log "warning: nvim not found; skipped"
+  exit 0
+fi
+
+log "installing LazyVim and plugins"
+nvim --headless "+Lazy! install" +qa
