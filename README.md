@@ -30,6 +30,12 @@ And one script that runs after every `chezmoi apply` / `chezmoi update`:
   `~/.claude/CLAUDE.md`. An existing non-matching file is reported, not
   overwritten.
 
+And one migration script that runs once per host:
+
+- `run_once_after_remove-moved-claude-rules.sh` — removes the pre-move
+  `~/.claude/rules/{analysis,manuscript}.md` copies (only if unmodified) and
+  stale `~/.codex/rules/*.md` symlinks. Delete it once every host has run it.
+
 ## What this repo intentionally does NOT manage
 
 See [`.chezmoiignore`](./.chezmoiignore) for the full list
