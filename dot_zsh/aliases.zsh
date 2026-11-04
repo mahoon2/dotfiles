@@ -35,8 +35,6 @@ alias cels="conda env list"
 
 # CLI tools
 alias cc="claude"
-alias ccu="ccusage"
-alias gem="gemini"
 alias co="codex"
 
 # uv
@@ -141,14 +139,9 @@ alias gfa="git fetch --all --tags --prune"
 alias gfg="git ls-files | grep"
 alias gfo="git fetch origin"
 alias gfp="git fetch --prune"
-alias gg="git gui citool"
-alias gga="git gui citool --amend"
 alias gignored='git ls-files -v | grep "^[[:lower:]]"'
 alias gignore="git update-index --assume-unchanged"
 alias ghh="git help"
-alias git-svn-dcommit-push='git svn dcommit && git push github $(_git_main_branch):svntrunk'
-alias gk="\gitk --all --branches &!"
-alias gke='\gitk --all $(git log --walk-reflogs --pretty=%h) &!'
 alias gl="git pull"
 alias glgg="git log --graph"
 alias glgga="git log --graph --decorate --all"
@@ -215,11 +208,9 @@ alias grt='cd "$(git rev-parse --show-toplevel || echo .)"'
 alias gru="git reset --"
 alias grup="git remote update"
 alias grv="git remote --verbose"
-alias gsd="git svn dcommit"
 alias gsh="git show"
 alias gsi="git submodule init"
 alias gsps="git show --pretty=short --show-signature"
-alias gsr="git svn rebase"
 alias gsta="git stash push"
 alias gstaa="git stash apply"
 alias gstall="git stash --all"
