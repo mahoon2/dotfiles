@@ -22,6 +22,5 @@ path=(
   "$HOME/.local/bin"        # pip/pipx and other user-level installs
   "$HOME/.local/go/bin"     # Go toolchain (manual install)
   "$GOPATH/bin"             # binaries from `go install`
-  "$HOME/.claude/local"     # Claude Code
   $path
 )
