@@ -8,8 +8,9 @@ My dotfiles, managed by [chezmoi](https://www.chezmoi.io). Source files live in
 
 | Tool        | Files                                                |
 | ----------- | ---------------------------------------------------- |
-| zsh         | `.zshrc`, `.zshenv`, `.profile`, `.p10k.zsh`         |
-| zsh helpers | `.zsh/completions/refresh.sh`                        |
+| zsh         | `.zshrc`, `.zshenv`, `.zprofile`, `.profile`, `.p10k.zsh` |
+| zsh helpers | `.zsh/path.sh`, `.zsh/completions/refresh.sh`, `.zsh/integrations/refresh.sh` |
+| CLI tools   | `.pixi/manifests/pixi-global.toml` and the install scripts below |
 | tmux        | `.tmux.conf`                                         |
 | neovim      | `.config/nvim/` (LazyVim setup; `lazy-lock.json` is per-host, see `.chezmoiignore`) |
 | matplotlib  | `.config/matplotlib/matplotlibrc`                    |
@@ -17,23 +18,36 @@ My dotfiles, managed by [chezmoi](https://www.chezmoi.io). Source files live in
 | Claude Code | `.claude/CLAUDE.md`, `.claude/rules/` (auto-loaded), `.claude/guides/` (read on demand), `.claude/themes/` |
 | Codex       | `.codex/themes/` (Tokyo Night `.tmTheme` from tokyonight.nvim extras) |
 
-Plus two bootstrap scripts that run once on first `chezmoi apply`:
+## Tool installation
 
-- `run_once_install-zsh-stack.sh` — regenerates the zoxide integration and
-  cached completions for the tools installed on the host. The zsh plugins and
-  theme under `~/.zsh/vendor` are vendored in this repo.
-- `run_once_install-tmux-stack.sh` — clones TPM into `~/.tmux/plugins/tpm`,
-  which installs the `@plugin` entries in `.tmux.conf` (`prefix + I`).
+Tools are installed into `$HOME` without sudo, in this order of preference:
+official installer, then a language package manager (cargo, uv, go), then
+`pixi global` (conda-forge) for the rest. Homebrew and apt are not used.
+`~/.zsh/path.sh` puts these locations ahead of system and Homebrew paths, and
+`~/.zprofile` re-applies it after macOS `path_helper`.
 
-And one script that runs after every `chezmoi apply` / `chezmoi update`:
+`chezmoi apply` runs these scripts after deploying files, in name order. Each
+reruns when its contents, or a file whose hash it embeds, change:
 
-- `run_after_link-codex-instructions.sh` — symlinks `~/.codex/AGENTS.md` to
-  `~/.claude/CLAUDE.md`. An existing non-matching file is reported, not
-  overwritten.
+| Script | Installs |
+| ------ | -------- |
+| `run_onchange_after_10-install-toolchains.sh.tmpl` | uv, pixi, rustup (+ rust-analyzer), Go (pinned, `~/.local/go`), nvm and node LTS; each only if missing |
+| `run_onchange_after_20-install-tools.sh.tmpl` | `pixi global sync`; eza, fd, ripgrep (cargo); ruff, ty, marimo, pre-commit (uv tool); zoxide (official script); fzf (`~/.fzf`); lazygit (`go install`) |
+| `run_onchange_after_30-install-tmux-stack.sh` | TPM and the `@plugin` entries in `.tmux.conf` |
+| `run_onchange_after_40-install-zsh-stack.sh` | zoxide integration and cached completions for the installed tools |
+| `run_onchange_after_50-install-lazyvim.sh.tmpl` | lazy.nvim, LazyVim, and the plugins in `.config/nvim`; Mason tools install on the first interactive launch |
 
-And one migration script that runs once per host:
+To add a tool, put it in the matching list in the `20` script or in the pixi
+manifest. To upgrade a pinned version, edit it in the script. Fonts (Inter for
+matplotlib, FiraCode Nerd Font for Ghostty) are not installed by these scripts.
 
-- `run_once_after_remove-moved-claude-rules.sh` — removes the pre-move
+Other scripts:
+
+- `run_after_link-codex-instructions.sh` runs after every `chezmoi apply`:
+
+  it symlinks `~/.codex/AGENTS.md` to `~/.claude/CLAUDE.md`. An existing
+  non-matching file is reported, not overwritten.
+- `run_once_after_remove-moved-claude-rules.sh` runs once per host: it removes the pre-move
   `~/.claude/rules/{analysis,manuscript}.md` copies (only if unmodified) and
   stale `~/.codex/rules/*.md` symlinks. Delete it once every host has run it.
 
@@ -43,27 +57,20 @@ See [`.chezmoiignore`](./.chezmoiignore) for the full list
 
 ## New machine setup
 
-One command pulls the binary, the repo, and runs the bootstrap scripts:
+Prerequisites: `git`, `curl`, `tar`, and a C compiler (for `cargo install`).
+One command pulls the binary, the repo, and runs the install scripts:
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply mahoon2/dotfiles
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply mahoon2/dotfiles
 ```
 
 This:
 
-1. Downloads the chezmoi binary into `~/bin/`.
+1. Downloads the chezmoi binary into `~/.local/bin/`.
 2. Clones this repo into `~/.local/share/chezmoi/`.
-3. Runs `chezmoi apply`, which:
-   - Materializes every managed file into `$HOME`.
-   - Executes both `run_once_*` scripts (zsh vendor checks and tmux plugins).
-   - Refreshes cached zsh completions for whatever tools are already installed.
-
-### After bootstrap: tmux plugins
-
-The bootstrap script installs Catppuccin, `tmux-cpu`, and `tmux-battery`
-directly because Catppuccin recommends manual installation. TPM remains
-available for `@plugin` entries such as `tmux-sensible`; open tmux and press
-`prefix + I` (capital I) if those TPM-managed entries need installing.
+3. Runs `chezmoi apply`, which materializes every managed file into `$HOME`
+   and then runs the install scripts above. The first run takes a few minutes
+   because cargo and go build some tools from source.
 
 ### One-time migration warning (existing dotfiles)
 
