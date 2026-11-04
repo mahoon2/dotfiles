@@ -38,11 +38,10 @@ Use `uv` by default instead of `pip`, `venv`, Poetry, or Pipenv. If the project 
 
 When `uv` is insufficient, such as when non-Python packages from conda-forge or Bioconda are required, prefer Pixi over Conda. If a project has a `pixi.toml` or a `[tool.pixi]` table in `pyproject.toml`, manage it with Pixi (`pixi add`, `pixi add --pypi`, `pixi run`) and do not create a separate `.venv/`.
 
-Use Conda only when the project already depends on a Conda environment or I explicitly request it. Determine the environment name from project documentation, environment files, or the current environment instead of guessing it. Initialize Conda with:
+Use Conda only when the project already depends on a Conda environment or I explicitly request it. Determine the environment name from project documentation, environment files, or the current environment instead of guessing it. If `conda` is not already available in the shell, initialize it before `conda activate`; on the `/blaze` server, use:
 
 ```bash
-eval "$('/blaze/mahoon2/conda/bin/conda' 'shell.bash' 'hook' 2>/dev/null)" &&
-conda activate <environment-name>
+eval "$('/blaze/mahoon2/conda/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
 ```
 
 ## Git
