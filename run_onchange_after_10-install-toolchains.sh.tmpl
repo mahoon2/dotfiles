@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Install user-space toolchains with their official installers when missing.
+# Nothing here needs sudo; everything lands under $HOME. Bump a pinned version
+# below to upgrade it on every host at the next `chezmoi apply`.
+
+set -euo pipefail
+
+GO_VERSION=1.27.3
+NVM_VERSION=v0.40.8
+
+log() { printf '[install-toolchains] %s\n' "$*"; }
+have() { command -v "$1" >/dev/null 2>&1; }
+
+. "$HOME/.zsh/path.sh"
+
+for tool in git curl tar; do
+  have "$tool" || { log "error: $tool is required"; exit 1; }
+done
+have cc || log "warning: no C compiler found; cargo install will fail"
+
+if ! have uv; then
+  log "installing uv"
+  curl -LsSf https://astral.sh/uv/install.sh | env UV_NO_MODIFY_PATH=1 sh
+fi
+
+if ! have pixi; then
+  log "installing pixi"
+  curl -fsSL https://pixi.sh/install.sh | env PIXI_NO_PATH_UPDATE=1 PIXI_NO_TELEMETRY=1 sh
+fi
+
+if ! have rustup; then
+  log "installing rustup"
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
+rustup component add rust-analyzer 2>/dev/null
+
+go_root="$HOME/.local/go"
+if [[ "$(head -n1 "$go_root/VERSION" 2>/dev/null)" != "go$GO_VERSION" ]]; then
+  log "installing go $GO_VERSION into $go_root"
+  tmp="$(mktemp -d)"
+  curl -fsSL "https://go.dev/dl/go$GO_VERSION.{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz" | tar -xzf - -C "$tmp"
+  rm -rf "$go_root"
+  mkdir -p "$(dirname "$go_root")"
+  mv "$tmp/go" "$go_root"
+  rmdir "$tmp"
+fi
+
+export NVM_DIR="$HOME/.nvm"
+if [[ ! -s "$NVM_DIR/nvm.sh" ]]; then
+  log "installing nvm $NVM_VERSION"
+  curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh" | env PROFILE=/dev/null bash
+fi
+if ! compgen -G "$NVM_DIR/versions/node/*" >/dev/null; then
+  log "installing node LTS"
+  (set +u; . "$NVM_DIR/nvm.sh"; nvm install --lts)
+fi
