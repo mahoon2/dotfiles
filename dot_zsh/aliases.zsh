@@ -1,8 +1,13 @@
 # Personal aliases. Keep frequently used Git shortcuts here instead of sourcing
 # OMZ Git plugins on every shell startup.
 
-alias ls="eza -l --icons=\"auto\" --group-directories-first"
-alias la="eza -l --icons=\"auto\" --group-directories-first -a"
+if (( $+commands[eza] )); then
+  alias ls="eza -l --icons=\"auto\" --group-directories-first"
+  alias la="eza -l --icons=\"auto\" --group-directories-first -a"
+else
+  alias ls="ls -l"
+  alias la="ls -la"
+fi
 alias vi="nvim"
 
 # Directory shortcuts.
