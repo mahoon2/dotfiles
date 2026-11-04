@@ -1,0 +1,8 @@
+# Targets removed from every host by `chezmoi apply`.
+# analysis.md and manuscript.md moved from ~/.claude/rules/ (auto-loaded by
+# Claude Code every session) to ~/.claude/guides/ (read on demand via
+# CLAUDE.md pointers). Their Codex symlinks are no longer needed either.
+.claude/rules/analysis.md
+.claude/rules/manuscript.md
+.codex/rules/analysis.md
+.codex/rules/manuscript.md

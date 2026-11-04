@@ -42,9 +42,9 @@ When my own prose is written in English:
 
 ## Task-specific rules
 
-For manuscript drafting or revision, read and follow `rules/manuscript.md` if it exists.
+Before manuscript drafting or revision, read and follow `~/.claude/guides/manuscript.md`.
 
-For biological or bioinformatics analysis, including command execution, read and follow `rules/analysis.md` if it exists.
+Before biological or bioinformatics analysis, including command execution, read and follow `~/.claude/guides/analysis.md`.
 
 For code-related tasks, read `rules/code.md` if it exists and is accessible. If it is unavailable, follow this file and the repository's existing conventions.
 
