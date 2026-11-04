@@ -28,6 +28,7 @@ When my own prose is in English, briefly flag meaningful grammatical or idiomati
 - For code-related tasks, follow `~/.claude/rules/code.md`, reading it first if it is not already in context.
 - Before manuscript drafting or revision, read and follow `~/.claude/guides/manuscript.md`.
 - Before biological or bioinformatics analysis, including command execution, read and follow `~/.claude/guides/analysis.md`.
+- If `~/.claude/guides/house-style.md` exists (the PI's standards, present only on some hosts), read it before research planning, analysis, code, commits, merge requests, manuscripts, reports, figures, posters, talks, or meetings, and load only the references its loading procedure selects.
 
 ## Instruction priority
 
