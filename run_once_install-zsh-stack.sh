@@ -28,7 +28,7 @@ if [[ -x "$HOME/.zsh/completions/refresh.sh" ]]; then
 fi
 
 # Invalidate stale compdumps so the new fpath/plugins are indexed.
-rm -f "$HOME"/.zcompdump* 2>/dev/null || true
+rm -f -- "${XDG_CACHE_HOME:-$HOME/.cache}"/zsh/zcompdump-*(N)
 
 log "done. Open a new shell or run 'exec zsh'."
 log "Reminder: secrets and host-local paths live in ~/.zshrc.local (not managed by chezmoi)."

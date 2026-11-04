@@ -4,7 +4,7 @@
 # fresh hosts where only some of the tools are installed yet.
 #
 # After running, invalidate the compdump and re-exec the shell:
-#   rm -f ~/.zcompdump* && exec zsh
+#   rm -f ~/.cache/zsh/zcompdump-* && exec zsh
 
 set -euo pipefail
 cd "${0:A:h}"   # this script's directory == ~/.zsh/completions
@@ -41,4 +41,4 @@ if (( $+commands[fd] )); then
   emit "refreshed _fd ($(wc -l < _fd) lines)"
 fi
 
-emit "done. Run:  rm -f ~/.zcompdump* && exec zsh"
+emit "done. Run:  rm -f ~/.cache/zsh/zcompdump-* && exec zsh"
