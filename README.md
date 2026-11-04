@@ -19,8 +19,9 @@ My dotfiles, managed by [chezmoi](https://www.chezmoi.io). Source files live in
 
 Plus two bootstrap scripts that run once on first `chezmoi apply`:
 
-- `run_once_install-zsh-stack.sh` — ensures the vendored zsh plugin/theme
-  directories under `~/.zsh/vendor` are present. Refreshes cached completions.
+- `run_once_install-zsh-stack.sh` — regenerates the zoxide integration and
+  cached completions for the tools installed on the host. The zsh plugins and
+  theme under `~/.zsh/vendor` are vendored in this repo.
 - `run_once_install-tmux-stack.sh` — clones TPM into `~/.tmux/plugins/tpm`,
   which installs the `@plugin` entries in `.tmux.conf` (`prefix + I`).
 
