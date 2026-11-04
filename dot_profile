@@ -29,4 +29,4 @@ fi
 if [ -f /etc/qbio-login.sh ]; then
     source /etc/qbio-login.sh
 fi
-. "$HOME/.cargo/env"
+[ -r "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
