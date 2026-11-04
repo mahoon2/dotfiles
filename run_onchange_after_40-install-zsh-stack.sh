@@ -1,15 +1,15 @@
 #!/usr/bin/env zsh
-# Bootstrap script: regenerate host-specific zsh files that chezmoi does not
-# manage (zoxide integration, cached completions). The plugins, theme, and OMZ
-# subset under ~/.zsh/vendor are vendored in this repo, and chezmoi deploys
-# them before this script runs. Re-runs only when this file's hash changes
-# (chezmoi run_once_* semantics).
+# Regenerate host-specific zsh files that chezmoi does not manage (zoxide
+# integration, cached completions) after the tool scripts have run. The
+# plugins, theme, and OMZ subset under ~/.zsh/vendor are vendored in this repo.
 
 set -euo pipefail
 
 ZSH_VENDOR="${ZSH_VENDOR:-$HOME/.zsh/vendor}"
 
 log() { print -r -- "[install-zsh-stack] $*" }
+
+source "$HOME/.zsh/path.sh"
 
 if [[ ! -r "$ZSH_VENDOR/themes/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
   log "warning: vendored zsh plugins are missing under $ZSH_VENDOR"
