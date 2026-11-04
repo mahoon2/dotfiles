@@ -98,14 +98,11 @@ Use `uv` to:
 
 Do not create multiple virtual environments for the same project.
 
-Do not use `pip`, `venv`, Poetry, Pipenv, or Conda in place of `uv` unless the repository explicitly requires them or `uv` cannot satisfy a necessary dependency or platform constraint.
+Do not use `pip`, `venv`, Poetry, Pipenv, Pixi, or Conda in place of `uv` unless the repository explicitly requires them or `uv` cannot satisfy a necessary dependency or platform constraint.
 
-Use Conda only when it is unavoidable, such as when:
+When `uv` is insufficient, such as when non-Python packages from conda-forge or Bioconda are required, prefer Pixi over Conda. If a project has a `pixi.toml` or a `[tool.pixi]` table in `pyproject.toml`, manage its environment with Pixi (`pixi add`, `pixi add --pypi`, `pixi run`) and do not create a separate `uv`-managed `.venv/`.
 
-- the project explicitly depends on an existing Conda environment
-- required non-Python packages are managed through Conda
-- a dependency cannot be installed or executed reliably with `uv`
-- the user explicitly requests a Conda environment
+Use Conda only when the project already depends on an existing Conda environment or the user explicitly requests Conda.
 
 Before running Conda commands, initialize and activate Conda with:
 
@@ -116,7 +113,7 @@ conda activate <environment-name>
 
 Do not guess the Conda environment name. Determine it from project documentation, environment files, the current environment, or an explicit instruction.
 
-Do not migrate an existing Conda-based project to `uv`, or an existing `uv` project to Conda, unless explicitly requested.
+Do not migrate an existing project between `uv`, Pixi, and Conda unless explicitly requested.
 
 Do not modify dependency declarations or lockfiles unless the task requires it.
 
