@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
-# Bootstrap script: install TPM on a fresh host. TPM then installs the
-# @plugin entries in ~/.tmux.conf (press 'prefix + I' inside tmux).
+# Install TPM and the @plugin entries in ~/.tmux.conf. Runs after the tool
+# scripts so that tmux is already installed.
 
 set -eu
 
@@ -8,6 +8,8 @@ TPM_DIR="$HOME/.tmux/plugins/tpm"
 LEGACY_PLUGIN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux/plugins"
 
 log() { printf '[install-tmux-stack] %s\n' "$*"; }
+
+. "$HOME/.zsh/path.sh"
 
 if [ -d "$TPM_DIR/.git" ]; then
   log "updating tpm"
@@ -20,6 +22,13 @@ else
   git clone --depth=1 --quiet https://github.com/tmux-plugins/tpm "$TPM_DIR"
 fi
 
+if command -v tmux >/dev/null 2>&1; then
+  log "installing tmux plugins"
+  "$TPM_DIR/bin/install_plugins" || log "warning: TPM plugin install failed"
+else
+  log "warning: tmux not found; skipped plugin install"
+fi
+
 # Earlier versions of this script cloned Catppuccin and standalone status
 # modules here. ~/.tmux.conf no longer loads them, so remove those clones.
 for dir in catppuccin/tmux tmux-plugins/tmux-cpu tmux-plugins/tmux-battery; do
@@ -29,5 +38,3 @@ for dir in catppuccin/tmux tmux-plugins/tmux-cpu tmux-plugins/tmux-battery; do
   fi
 done
 rmdir "$LEGACY_PLUGIN_DIR/catppuccin" "$LEGACY_PLUGIN_DIR/tmux-plugins" 2>/dev/null || true
-
-log "done. Open tmux and press 'prefix + I' to install the @plugin entries."
