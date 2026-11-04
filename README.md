@@ -21,8 +21,8 @@ Plus two bootstrap scripts that run once on first `chezmoi apply`:
 
 - `run_once_install-zsh-stack.sh` — ensures the vendored zsh plugin/theme
   directories under `~/.zsh/vendor` are present. Refreshes cached completions.
-- `run_once_install-tmux-stack.sh` — clones TPM into `~/.tmux/plugins/tpm`
-  and installs Catppuccin/tmux status modules under `~/.config/tmux/plugins`.
+- `run_once_install-tmux-stack.sh` — clones TPM into `~/.tmux/plugins/tpm`,
+  which installs the `@plugin` entries in `.tmux.conf` (`prefix + I`).
 
 And one script that runs after every `chezmoi apply` / `chezmoi update`:
 

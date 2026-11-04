@@ -1,44 +1,33 @@
 #!/usr/bin/env sh
-# Bootstrap script: install tmux plugins on a fresh host.
-#
-# Catppuccin recommends manual installation because TPM has repository-name
-# conflicts for catppuccin/tmux. This script clones Catppuccin and status
-# modules into the exact paths loaded by ~/.tmux.conf, and keeps TPM available
-# for the remaining @plugin entries.
+# Bootstrap script: install TPM on a fresh host. TPM then installs the
+# @plugin entries in ~/.tmux.conf (press 'prefix + I' inside tmux).
 
 set -eu
 
 TPM_DIR="$HOME/.tmux/plugins/tpm"
-TMUX_PLUGIN_DIR="${TMUX_PLUGIN_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/tmux/plugins}"
+LEGACY_PLUGIN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux/plugins"
 
 log() { printf '[install-tmux-stack] %s\n' "$*"; }
 
-clone_or_pull() {
-  url=$1
-  dest=$2
-  branch=${3:-}
+if [ -d "$TPM_DIR/.git" ]; then
+  log "updating tpm"
+  git -C "$TPM_DIR" pull --quiet --ff-only || true
+elif [ -e "$TPM_DIR" ]; then
+  log "tpm already present at $TPM_DIR"
+else
+  log "cloning tpm into $TPM_DIR"
+  mkdir -p "$(dirname "$TPM_DIR")"
+  git clone --depth=1 --quiet https://github.com/tmux-plugins/tpm "$TPM_DIR"
+fi
 
-  if [ -d "$dest/.git" ]; then
-    log "$(basename "$dest") already present at $dest - pulling latest"
-    git -C "$dest" pull --quiet --ff-only || true
-  elif [ -e "$dest" ]; then
-    log "$(basename "$dest") already present at $dest"
-  else
-    log "cloning $(basename "$dest") into $dest"
-    mkdir -p "$(dirname "$dest")"
-    if [ -n "$branch" ]; then
-      git clone --branch "$branch" --depth=1 --quiet "$url" "$dest"
-    else
-      git clone --depth=1 --quiet "$url" "$dest"
-    fi
+# Earlier versions of this script cloned Catppuccin and standalone status
+# modules here. ~/.tmux.conf no longer loads them, so remove those clones.
+for dir in catppuccin/tmux tmux-plugins/tmux-cpu tmux-plugins/tmux-battery; do
+  if [ -d "$LEGACY_PLUGIN_DIR/$dir/.git" ]; then
+    rm -rf "${LEGACY_PLUGIN_DIR:?}/$dir"
+    log "removed unused clone $LEGACY_PLUGIN_DIR/$dir"
   fi
-}
+done
+rmdir "$LEGACY_PLUGIN_DIR/catppuccin" "$LEGACY_PLUGIN_DIR/tmux-plugins" 2>/dev/null || true
 
-clone_or_pull https://github.com/tmux-plugins/tpm "$TPM_DIR"
-clone_or_pull https://github.com/catppuccin/tmux.git "$TMUX_PLUGIN_DIR/catppuccin/tmux" v2.3.0
-clone_or_pull https://github.com/tmux-plugins/tmux-cpu "$TMUX_PLUGIN_DIR/tmux-plugins/tmux-cpu"
-clone_or_pull https://github.com/tmux-plugins/tmux-battery "$TMUX_PLUGIN_DIR/tmux-plugins/tmux-battery"
-
-log "done. Next steps:"
-log "  1. Open tmux (or run 'tmux source ~/.tmux.conf' in an existing session)"
-log "  2. Press 'prefix + I' (capital I) to install any TPM @plugin entries"
+log "done. Open tmux and press 'prefix + I' to install the @plugin entries."
