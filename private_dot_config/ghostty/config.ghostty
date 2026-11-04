@@ -5,6 +5,12 @@ font-thicken = true
 macos-option-as-alt = true
 keybind = shift+enter=text:\n
 
+# Use TERM=xterm-256color over ssh so remote hosts need no xterm-ghostty
+# terminfo entry; every ncurses build (system or conda-forge) ships that one.
+# ssh-terminfo stays off: it installs the entry with the remote's tic, whose
+# directory layout conda-forge ncurses (pixi's tmux) cannot read.
+shell-integration-features = ssh-env
+
 # Cmd + arrow: beginning/end of line
 keybind = super+arrow_left=text:\x01
 keybind = super+arrow_right=text:\x05
