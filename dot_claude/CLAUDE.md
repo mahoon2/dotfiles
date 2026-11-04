@@ -18,7 +18,6 @@ Otherwise, make the most reasonable assumption, state it briefly when relevant, 
 
 ## Communication
 
-- Respond in English unless I explicitly request another language.
 - Use clear sentence structure while retaining technical terminology needed for precision.
 - Keep explanations proportional to the complexity of the task.
 - For nontrivial work, explain what was done, why the approach was chosen, and how the result works.
