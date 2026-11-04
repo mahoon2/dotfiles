@@ -27,8 +27,7 @@ Plus two bootstrap scripts that run once on first `chezmoi apply`:
 And one script that runs after every `chezmoi apply` / `chezmoi update`:
 
 - `run_after_link-codex-instructions.sh` — symlinks `~/.codex/AGENTS.md` to
-  `~/.claude/CLAUDE.md` and each `~/.codex/rules/*.md` to the matching
-  `~/.claude/rules/*.md`. Existing non-matching files are reported, not
+  `~/.claude/CLAUDE.md`. An existing non-matching file is reported, not
   overwritten.
 
 ## What this repo intentionally does NOT manage
