@@ -18,8 +18,8 @@ alias -g ....="../../.."
 alias py="python3"
 alias python="python3"
 alias pip="pip3"
-alias pi="pip3 install"
-alias pui="pip3 uninstall"
+alias pipi="pip3 install"
+alias pipui="pip3 uninstall"
 
 # Python virtualenv
 alias va='source .venv/bin/activate'
