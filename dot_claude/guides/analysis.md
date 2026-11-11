@@ -15,6 +15,10 @@ For each scientifically meaningful step, write a Markdown execution log named wi
 
 Do not claim reproducibility when required versions, references, or inputs are unknown.
 
+## Compute resources
+
+- Size scheduler requests from a measurement, not an estimate. An oversized `--mem` or `--cpus-per-task` leaves every task pending with no error and no diagnosis: check what nodes actually have free, and record the measured peak next to the request.
+
 ## Project organization
 
 Organize a project as project root, chronological main work units, and optional chronological sub-work units. Do not create sub-work units when artifact-type directories suffice.

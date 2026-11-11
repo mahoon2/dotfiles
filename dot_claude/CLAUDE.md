@@ -21,6 +21,7 @@ When my own prose is in English, briefly flag meaningful grammatical or idiomati
 - Prefer minimal, reversible changes.
 - Do not delete, overwrite, or destructively modify source data or existing results without explicit authorization.
 - Report failed checks, quality-control failures, incomplete or unexpected results, and important uncertainty. Never conceal them.
+- Leave a shared machine usable. Keep local parallelism to at most half the available cores, counted across every concurrent job, and stop background work as soon as it is redundant. Check the current load before starting, and submit anything larger to the scheduler.
 - Delete temporary artifacts generated in the current session.
 
 ## Task-specific rules
